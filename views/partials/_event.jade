@@ -1,0 +1,13 @@
+.form-group
+    label.col-sm-3.control-label(for='title') Título
+    .col-sm-7
+        input.form-control(type='text', name='title', id='title', placeholder='Título', autofocus)
+.form-group
+    label.col-sm-3.control-label(for='description') Descripción
+    .col-sm-7
+        textarea.form-control(name='description', id='description', placeholder='Descripción')
+.form-group
+    .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+            i.fa.fa-user-plus
+            | Crear evento
