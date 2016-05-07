@@ -12,6 +12,7 @@ html
 
     .map
       #welcome-map
+
     .container
       include partials/flash
       block content
@@ -19,4 +20,5 @@ html
     include partials/footer
 
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDz3hvbb5cIUmdhqG7rOmwVbW3djMGc2S8')
+    script(src='http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false')
     != js('application')

@@ -41,19 +41,27 @@ eventSchema.statics.findByText = function(text) {
 };
 
 
-eventSchema.statics.findNear = function(query) {
+eventSchema.statics.findByLocation = function(query) {
   var params = R.pick([
     'location', 'distance', 'limit'
   ], query);
 
-  // we need to convert the distance to radians
-  // the raduis of Earth is approximately 6371 kilometers
-  var maxDistance = params.distance / 6371;
+  var location = params.location;
+  var distance = parseFloat(params.distance);
 
-  // find a location
+  if (R.is(Object, location)) {
+    location.lng = parseFloat(location.lng);
+    location.lat = parseFloat(location.lat);
+    location = [location.lng, location.lat]
+  }
+
+  // convert distance to radians, raduis of Earth is approximately 6371kms
+  var maxDistance = (distance || 100) / 6371,
+      limit = params.limit || 10;
+
   return Event.findAsync({
     location: {
-      $near: params.coords,
+      $near: location,
       $maxDistance: maxDistance
     }
   });

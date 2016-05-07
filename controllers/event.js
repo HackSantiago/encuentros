@@ -14,6 +14,15 @@ exports.index = function(req, res) {
   });
 };
 
+exports.getEventsNearToLocation = function(req, res) {
+  var params = R.pick(['location', 'distance'], req.query);
+
+  Event.findByLocation(params)
+  .then(function(events) {
+    res.send({events: events || []});
+  });
+};
+
 exports.show = function(req, res) {
   var eventId = req.params.eventId;
 

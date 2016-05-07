@@ -15,6 +15,7 @@
 
 //= require lib/jquery-2.1.3.min
 //= require lib/bootstrap.min
-//= require lib/components/leaflet/dist/leaflet
+//= require lib/components/ramda/dist/ramda.min
+//= require lib/components/lodash/dist/lodash.min
 //= require home
 //= require show-event-map

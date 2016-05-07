@@ -192,10 +192,11 @@ app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '
   res.redirect('/api/venmo');
 });
 
-app.get('/event', passportConf.isAuthenticated, eventController.index);
+app.get('/event', eventController.index);
+app.get('/event/near', eventController.getEventsNearToLocation);
 app.get('/event/new', passportConf.isAuthenticated, eventController.getCreate);
 app.get('/event/update', passportConf.isAuthenticated, eventController.getUpdate);
-app.get('/event/:eventId', passportConf.isAuthenticated, eventController.show);
+app.get('/event/:eventId', eventController.show);
 
 app.post('/event/new', passportConf.isAuthenticated, eventController.create);
 app.put('/event/update', passportConf.isAuthenticated, eventController.update);
