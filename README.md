@@ -1,8 +1,8 @@
 # Ecuentros Locales
 
-Volatile chat for your company.
 
-# Install
+
+### Install
 
     npm install
     npm start
