@@ -1,15 +1,23 @@
 extends ../layout
 
 block content
-    h1 #{event.title}
 
-    p Invita participantes:
+    .col-sm-4
+        h1 #{event.title}
 
-    ul
-    for user in users
-        li #{user.email} <input type="checkbox" name="participant" value="#{user.id}">
+        p #{event.description}
 
+        p Participantes:
 
-    ul
-        li Share on Facebook
-        li Share on Twitter
+        if event.participants
+            ul
+            for participant in event.participants
+                li #{participant.email}
+        .js-event-coords
+
+        .addthis_native_toolbox
+    .col-sm-8
+        div#show-event-map(data-coords="#{JSON.stringify(event.location)}")
+
+block extra-scripts
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-572e42ebc8e2a29e"></script>

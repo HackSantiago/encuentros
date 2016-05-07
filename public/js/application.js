@@ -17,3 +17,4 @@
 //= require lib/bootstrap.min
 //= require lib/components/leaflet/dist/leaflet
 //= require home
+//= require show-event-map
