@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    h1 Eventos
+
+    a(href="/event/new") Crear nuevo evento
+
+    for event in events
+        p
+            a(href="/event/#{event.id}") #{event.title}
