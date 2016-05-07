@@ -8,13 +8,16 @@ block content
         p #{event.desc}
 
         p Dirección: #{event.address}
+        p Moderador:
+          +renderUser(event.moderator)
 
-        p Participantes:
 
-        if event.participants
+        if event.participants && event.participants.length
+          p Participantes:
             ul
-            for participant in event.participants
-                li #{participant.email}
+              for participant in event.participants
+                li
+                  +renderUser(participant)
         .js-event-coords
 
         .addthis_native_toolbox

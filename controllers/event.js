@@ -45,10 +45,8 @@ exports.show = function(req, res) {
 };
 
 exports.addParticipants = function (req, res) {
-
-  var eventId = req.params.eventId;
-
-  console.log('asdad', req.body.participant);
+  var eventId = req.params.eventId,
+      participant = req.body.participant;
 
   Event.findOne({_id: eventId}, function (err, event) {
 
@@ -70,21 +68,27 @@ exports.create = function(req, res) {
   var event = new Event({
     moderator: req.user,
     title: req.body.title,
-    description: req.body.description,
+    desc: req.body.desc,
     url: req.body.url,
+    address: req.body.address,
     location: [req.body.longitude, req.body.latitude]
   });
 
-  // validate not same creator
   event.save(function (err, savedEvent) {
     if (err) return next(err);
-
-    res.redirect('/event');
+    res.redirect('/event/' + savedEvent._id);
   });
 };
 
 exports.getCreate = function (req, res) {
-  res.render('event/new');
+  Event.findOne(createUserFilter(req.user), function(err, foundEvent) {
+    console.log(foundEvent)
+    if (foundEvent) {
+      req.flash('errors', {msg: 'Ya eres parte de un evento'})
+      return res.redirect('/event/my-event');
+    }
+    res.render('event/new');
+  });
 };
 
 exports.attend = function (req, res) {
@@ -114,3 +118,17 @@ exports.getUpdate = function(req, res) {
     });
   });
 };
+
+exports.myEvent = function(req, res) {
+  Event.findOne(createUserFilter(req.user)).populate('moderator').exec(function(err, event) {
+    if (err || !event) return next(err);
+    console.log(event)
+    res.render('event/my-event', {
+      event: event
+    });
+  })
+};
+
+function createUserFilter(user) {
+  return {$or:[{moderator: user}, {participants: {$in: [user]}}]}
+}

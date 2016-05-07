@@ -8,6 +8,7 @@ var eventSchema = new mongoose.Schema({
   title:        String,
   desc:         String,
   url:          String,
+  address:      String,
   tags:         { type: [String] , default: '' },
   moderator:    { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   participants: [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],
@@ -20,7 +21,7 @@ var eventSchema = new mongoose.Schema({
 });
 
 eventSchema.plugin(searchPlugin, {
-  fields: ['title', 'desc', 'tags']
+  fields: ['title', 'desc', 'tags', 'address']
 });
 
 
