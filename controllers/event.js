@@ -53,7 +53,7 @@ exports.create = function(req, res) {
   var event = new Event({
     moderator: req.user,
     title: req.body.title,
-    description: req.body.description,
+    desc: req.body.desc,
     url: req.body.url,
     address: req.body.address,
     location: [req.body.longitude, req.body.latitude]

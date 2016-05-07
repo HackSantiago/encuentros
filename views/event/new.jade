@@ -8,15 +8,15 @@ block content
         .form-group
             label.col-sm-3.control-label(for='title') Título
             .col-sm-7
-                input.form-control(type='text', name='title', id='title', placeholder='Título', autofocus)
+                input.form-control(type='text', name='title', id='title', placeholder='Título', autofocus, required)
         .form-group
             label.col-sm-3.control-label(for='description') Descripción
             .col-sm-7
-                textarea.form-control(name='description', id='description', placeholder='Descripción')
+                textarea.form-control(name='desc', id='desc', placeholder='Descripción')
         .form-group
             label.col-sm-3.control-label Location
             .col-sm-7
-              input.form-control(type='text', name='address', id='address', placeholder='Address')
+              input.form-control(type='text', name='address', id='address', placeholder='Address', required)
               input(type='hidden', name='latitude' id='latitude')
               input(type='hidden', name='longitude' id='longitude')
         .form-group
