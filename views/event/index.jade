@@ -2,23 +2,28 @@ extends ../layout
 
 block content
 
-  .row
-    .col-sm-12
-      a.btn.btn-primary(href="/event/new") Crear novo evento
+
 
   .row
     .col-sm-4
-        form#search-form(method="GET")
-            .form-group
-                input#search-box.form-control(type="text" name="text" placeholder='ej: libertad de expresion, aborto, pena de muerte, ...' value="#{query || '' }")
-            .form-group
-                input.btn(type="submit")
-        for event in events
-            .event-location
-                span.js-scroll-to-location(data-coords="#{JSON.stringify(event.location)}") #{event.title}
-                a.btn.btn-default.btn-sm(href="/event/#{event.id}") Detalles
+        .row
+          .col-sm-12
+            p
+              a.btn.btn-success(href="/event/new") Crear novo evento
+        .row
+            form#search-form(method="GET")
+              .col-sm-9
+                  input#search-box.form-control(type="text" name="text" placeholder='ej: libertad de expresion, aborto, pena de muerte, ...' value="#{query || '' }")
+              .col-sm-3
+                  input.btn.btn-primary(type="submit")
+        .event-list
+          for event in events
+              .row.event-location
+                .col-sm-9
+                  span.js-scroll-to-location(data-coords="#{JSON.stringify(event.location)}") #{event.title}
+                .col-sm-3
+                  a.btn.btn-info.btn-sm(href="/event/#{event.id}") Detalles >
 
-        .addthis_native_toolbox
     .col-sm-8
         div#list-event-map
 
