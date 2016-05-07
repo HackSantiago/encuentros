@@ -2,6 +2,7 @@ var R = require('ramda');
 
 var Event = require('../models/Event');
 var User = require('../models/User');
+var Promise = require('bluebird');
 
 
 exports.index = function(req, res) {
@@ -40,17 +41,15 @@ exports.getEventsNearToLocation = function(req, res) {
 
 exports.show = function(req, res) {
   var eventId = req.params.eventId;
-
-  Event.findOne({_id: eventId}, function (err, event) {
-
-    User.find({}, function (err, users) {
-      users = users || [];
-      res.render('event/show', {
-        event: event,
-        users: users
-      });
+  var findEvent = Event.findOne({_id: eventId}).populate('moderator').populate('participants').exec()
+  Promise.all([isPartOfEvent(req.user), findEvent]).then(function(results) {
+    var event = results[1]
+    res.render('event/show', {
+      event: event,
+      isPartOfEvent: results[0],
+      loggedIn: !!req.user
     });
-  });
+  })
 };
 
 exports.addParticipants = function (req, res) {
@@ -58,7 +57,6 @@ exports.addParticipants = function (req, res) {
       participant = req.body.participant;
 
   Event.findOne({_id: eventId}, function (err, event) {
-
     User.findOne({_id: userId}, function (err, user) {
       event.participants.push(user);
       res.status(200).send();
@@ -90,18 +88,34 @@ exports.create = function(req, res) {
 };
 
 exports.getCreate = function (req, res) {
-  Event.findOne(createUserFilter(req.user), function(err, foundEvent) {
-    console.log(foundEvent)
-    if (foundEvent) {
-      req.flash('errors', {msg: 'Ya eres parte de un evento'})
+  isPartOfEvent(req.user).then(function(result) {
+    if (result) {
+      req.flash('errors', {msg: 'Ya eres parte de un evento'});
       return res.redirect('/event/my-event');
     }
     res.render('event/new');
-  });
+  })
 };
 
-exports.attend = function (req, res) {
-
+exports.join = function (req, res) {
+  isPartOfEvent(req.user).then(function(result) {
+    if (result) {
+      req.flash('errors', {msg: 'Ya eres parte de un evento'});
+      return res.redirect('/event/my-event');
+    }
+    var eventId = req.body.eventId
+    Event.findOne({ _id: eventId}, function(err, event) {
+      if (err) return next(err);
+      if (!event) {
+        return res.redirect('/event');
+      }
+      event.participants.push(req.user);
+      event.save(function (err, event) {
+        req.flash('success', { msg: 'Te has unido a este evento.' });
+        res.redirect('/event/' + eventId);
+      });
+    });
+  })
 };
 
 exports.update = function (req, res) {
@@ -137,6 +151,12 @@ exports.myEvent = function(req, res) {
     });
   })
 };
+
+function isPartOfEvent(user) {
+  return Event.findOne(createUserFilter(user)).then(function(event, b, c) {
+    return !!event
+  })
+}
 
 function createUserFilter(user) {
   return {$or:[{moderator: user}, {participants: {$in: [user]}}]}

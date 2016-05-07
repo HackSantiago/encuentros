@@ -2,23 +2,35 @@ extends ../layout
 
 block content
 
-    .col-sm-4
-        h1 #{event.title}
+  .col-sm-4
+    if !isPartOfEvent
+      .row
+        .col-sm-12
+          form.form-horizontal(id='create-event-form', method='POST' action='/event/join')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input(type='hidden', id='eventId', name='eventId' value='#{event._id}')
+            button.btn.btn-success(type='submit') Unirse a este evento
+    h1 #{event.title}
 
-        p #{event.desc}
+    p #{event.desc}
 
-        p Dirección: #{event.address}
+    p Dirección: #{event.address}
+    p Moderador:
+      +renderUser(event.moderator)
 
-        p Participantes:
 
-        if event.participants
-            ul
-            for participant in event.participants
-                li #{participant.email}
-        .js-event-coords
+    if event.participants && event.participants.length
+      p Participantes:
+        ul
+          for participant in event.participants
+            li
+              +renderUser(participant)
+    .js-event-coords
 
-        .addthis_native_toolbox
-    .col-sm-8
-        div#show-event-map(data-coords="#{JSON.stringify(event.location)}" data-address='#{event.address}' data-title='#{event.title}')
+
+
+    .addthis_native_toolbox
+  .col-sm-8
+    div#show-event-map(data-coords="#{JSON.stringify(event.location)}" data-address='#{event.address}' data-title='#{event.title}')
 block extra-scripts
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-572e42ebc8e2a29e"></script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-572e42ebc8e2a29e"></script>
