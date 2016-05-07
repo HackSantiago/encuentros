@@ -11,7 +11,8 @@
         | Encuentros Locales
     .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
-
+        li
+          a(href='/event') Ver eventos
         if !user
           li(class=title=='Login'?'active':undefined)
             a(href='/login') Login
