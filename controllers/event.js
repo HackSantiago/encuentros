@@ -41,9 +41,9 @@ exports.getEventsNearToLocation = function(req, res) {
 
 exports.show = function(req, res) {
   var eventId = req.params.eventId;
-  var findEvent = Event.findOne({_id: eventId}).populate('moderator').populate('participants').exec()
+  var findEvent = findEvent({_id: eventId}).exec();
   Promise.all([isPartOfEvent(req.user), findEvent]).then(function(results) {
-    var event = results[1]
+    var event = results[1];
     res.render('event/show', {
       event: event,
       isPartOfEvent: results[0],
@@ -132,7 +132,6 @@ exports.update = function (req, res) {
 
 exports.getUpdate = function(req, res) {
   var eventId = req.params.eventId;
-
   Event.findOne({ _id: eventId}, function(err, event) {
     if (err || !event) return next(err);
 
@@ -143,9 +142,9 @@ exports.getUpdate = function(req, res) {
 };
 
 exports.myEvent = function(req, res) {
-  Event.findOne(createUserFilter(req.user)).populate('moderator').exec(function(err, event) {
-    if (err || !event) return next(err);
-    console.log(event)
+  findEvent(createUserFilter(req.user)).exec(function(err, event) {
+    if (err) return next(err);
+    if (!event) return res.redirect('/event');
     res.render('event/my-event', {
       event: event
     });
@@ -153,11 +152,15 @@ exports.myEvent = function(req, res) {
 };
 
 function isPartOfEvent(user) {
-  return Event.findOne(createUserFilter(user)).then(function(event, b, c) {
+  return Event.findOne(createUserFilter(user)).then(function(event) {
     return !!event
   })
 }
 
 function createUserFilter(user) {
   return {$or:[{moderator: user}, {participants: {$in: [user]}}]}
+}
+
+function findEvent(filter) {
+  return Event.findOne(filter).populate('moderator').populate('participants');
 }
