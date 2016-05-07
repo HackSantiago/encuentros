@@ -27,8 +27,10 @@ var assets = require('connect-assets');
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
-var eventController = require('./controllers/event');
-
+/**
+ * Middlewares
+ */
+var userMiddleware = require('./middlewares/user');
 
 /**
  * API keys and Passport configuration.
@@ -188,15 +190,6 @@ app.get('/auth/venmo', passport.authorize('venmo', { scope: 'make_payments acces
 app.get('/auth/venmo/callback', passport.authorize('venmo', { failureRedirect: '/api' }), function(req, res) {
   res.redirect('/api/venmo');
 });
-
-app.get('/event', passportConf.isAuthenticated, eventController.index);
-app.get('/event/new', passportConf.isAuthenticated, eventController.getCreate);
-app.get('/event/update', passportConf.isAuthenticated, eventController.getUpdate);
-app.get('/event/:eventId', passportConf.isAuthenticated, eventController.show);
-
-app.post('/event/new', passportConf.isAuthenticated, eventController.create);
-app.put('/event/update', passportConf.isAuthenticated, eventController.update);
-app.put('/event/add-participants', passportConf.isAuthenticated, eventController.addParticipants);
 
 
 /**
