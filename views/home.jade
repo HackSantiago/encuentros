@@ -1,0 +1,9 @@
+extends layout
+
+block content
+
+  h1 Welcome to the Volatile AxiomChat
+
+  img(src="/img/thebear.png" width="34px")
+  if user
+    a.btn.btn-large.btn-success(href="/chat") Go to Chat
