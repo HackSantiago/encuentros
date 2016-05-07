@@ -53,7 +53,7 @@ exports.create = function(req, res) {
     title: req.body.title,
     description: req.body.description,
     url: req.body.url,
-    location: [req.body.latitude, req.body.longitude]
+    location: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)]
   });
 
   // validate not same creator
