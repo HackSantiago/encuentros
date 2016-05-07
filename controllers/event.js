@@ -9,8 +9,23 @@ exports.index = function(req, res) {
 
   Event.findByText(params.text)
   .then(function(events) {
-    console.log('EVENTS FOUND!', events);
-    res.render('event/index', {events: events});
+    events = events || [];
+
+    events = events.map(function(event) {
+      return  {
+        id: event.id,
+        location: {
+          lng: event.location[0],
+          lat: event.location[1]
+        },
+        title: event.title
+      }
+    });
+    
+    res.render('event/index', {
+      events: events,
+      query: params.text
+    });
   });
 };
 

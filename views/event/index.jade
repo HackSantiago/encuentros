@@ -1,10 +1,37 @@
 extends ../layout
 
 block content
-    h1 Eventos
 
-    a(href="/event/new") Crear nuevo evento
 
-    for event in events
-        p
-            a(href="/event/#{event.id}") #{event.title}
+
+  .row
+    .col-sm-4
+        .row
+          .col-sm-12
+            p
+              a.btn.btn-success(href="/event/new") Crear nuevo evento
+        .row
+            form#search-form(method="GET")
+              .col-sm-9
+                  input#search-box.form-control(type="text" name="text" placeholder='ej: libertad de expresion, aborto, pena de muerte, ...' value="#{query || '' }")
+              .col-sm-3
+                  input.btn.btn-primary(type="submit")
+        .event-list
+          for event in events
+              .row.event-location
+                .col-sm-9
+                  span.js-scroll-to-location(data-coords="#{JSON.stringify(event.location)}") #{event.title}
+                .col-sm-3
+                  a.btn.btn-info.btn-sm(href="/event/#{event.id}") Detalles >
+
+    .col-sm-8
+        div#list-event-map
+
+block extra-scripts
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDz3hvbb5cIUmdhqG7rOmwVbW3djMGc2S8&libraries=places')
+    != js('list-event-map')
+
+    script.
+        var searchResults = !{JSON.stringify(events)};
+
+
