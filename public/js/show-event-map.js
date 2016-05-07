@@ -1,14 +1,33 @@
 $(document).ready(function() {
+  var $mapContainer = $('#show-event-map')
+  if($mapContainer.size() > 0) {
+    var coords  = $mapContainer.data('coords'),
+        address = $mapContainer.data('address'),
+        address = address !== 'undefined' ? address : '';
+        title   = $mapContainer.data('title');
+    console.log(address, typeof address)
+    var position = new google.maps.LatLng(coords[0], coords[1]);
+    console.log(position, $mapContainer);
+    var map = map = new google.maps.Map($mapContainer[0], {
+      center: position,
+      zoom: 16
+    });
 
-  if($('#show-event-map').size() > 0) {
-    var coords = $('#show-event-map').data('coords');
-    var map = L.map('show-event-map').setView(coords, 16);
-    L.tileLayer('https://api.mapbox.com/styles/v1/creedarky/cinxcugqq0000b1nub2sxmq2h/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiY3JlZWRhcmt5IiwiYSI6ImNpbnhjdGZ6dTE3NHJ1YW0zb3Z4Z242M3QifQ.o0bJWPmReYxFiL1VVR_f3g', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 20
-    }).addTo(map);
+    var marker = new google.maps.Marker({
+      position: position,
+      title:"Hello World!"
+    });
+    marker.setMap(map);
+    var infowindow = new google.maps.InfoWindow();
+    infowindow.setContent('<div><strong>' + title + '</strong><br>' + address);
 
-    L.marker(coords).addTo(map);
+    marker.addListener('click', function() {
+      openInfo();
+    });
+    function openInfo() {
+      infowindow.open(map, marker);
+    }
+    openInfo();
   }
 
 });

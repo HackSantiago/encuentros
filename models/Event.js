@@ -13,8 +13,10 @@ var eventSchema = new mongoose.Schema({
   title: String,
   desc: String,
   url: String,
+  address: String,
   moderator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   participants: [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],
+
   location: Array
 },
   {
