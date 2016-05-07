@@ -98,3 +98,15 @@ exports.getUpdate = function(req, res) {
     });
   });
 };
+
+exports.myEvent = function(req, res) {
+  var user = req.user;
+  var filter = {$or:[{moderator: user}, {participants: {$in: [user]}}]}
+  Event.findOne(filter).populate('moderator').exec(function(err, event) {
+    if (err || !event) return next(err);
+    console.log(event)
+    res.render('event/my-event', {
+      event: event
+    });
+  })
+};
