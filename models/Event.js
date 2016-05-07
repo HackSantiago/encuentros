@@ -26,10 +26,17 @@ eventSchema.plugin(searchPlugin, {
 
 eventSchema.statics.findByText = function(text) {
   if (!text) {
-    return Event.find({});
+    return Event.findAsync({});
   }
 
-  return Event.search(text);
+  return Event.searchAsync(text)
+  .then(function(events) {
+    if (!events || !events.length) {
+      return Event.findAsync({});
+    }
+
+    return events;
+  });
 };
 
 
