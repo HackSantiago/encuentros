@@ -1,9 +1,13 @@
 extends ../layout
 
 block content
-    h1 Evento: #{event.name}
+    h1 #{event.title}
 
     p Invita participantes:
+
+    ul
+    for user in users
+        li #{user.email} <input type="checkbox" name="participant" value="#{user.id}">
 
 
     ul

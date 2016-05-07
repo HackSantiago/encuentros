@@ -1,4 +1,5 @@
 var Event = require('../models/Event');
+var User = require('../models/User');
 
 exports.index = function(req, res) {
   Event.find({}, function(err, events) {
@@ -13,10 +14,29 @@ exports.show = function(req, res) {
   var eventId = req.params.eventId;
 
   Event.findOne({_id: eventId}, function (err, event) {
-    res.render('event/show', {
-      event: event
-    });
 
+    User.find({}, function (err, users) {
+      users = users || [];
+      res.render('event/show', {
+        event: event,
+        users: users
+      });
+    });
+  });
+};
+
+exports.addParticipants = function (req, res) {
+
+  var eventId = req.params.eventId;
+
+  console.log('asdad', req.body.participant);
+
+  Event.findOne({_id: eventId}, function (err, event) {
+
+    User.findOne({_id: userId}, function (err, user) {
+      event.participants.push(user);
+      res.status(200).send();
+    });
   });
 };
 

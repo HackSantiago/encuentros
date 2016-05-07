@@ -195,7 +195,8 @@ app.get('/event/update', passportConf.isAuthenticated, eventController.getUpdate
 app.get('/event/:eventId', passportConf.isAuthenticated, eventController.show);
 
 app.post('/event/new', passportConf.isAuthenticated, eventController.create);
-app.post('/event/update', passportConf.isAuthenticated, eventController.update);
+app.put('/event/update', passportConf.isAuthenticated, eventController.update);
+app.put('/event/add-participants', passportConf.isAuthenticated, eventController.addParticipants);
 
 
 /**
