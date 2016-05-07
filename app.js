@@ -27,7 +27,10 @@ var assets = require('connect-assets');
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
-
+/**
+ * Middlewares
+ */
+var userMiddleware = require('./middlewares/user');
 
 /**
  * API keys and Passport configuration.
