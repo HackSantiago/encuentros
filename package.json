@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "node app.js",
+    "start-dev": "nodemon app.js",
     "test": "mocha"
   },
   "dependencies": {
@@ -69,6 +70,7 @@
     "chai": "^3.3.0",
     "mocha": "^2.3.3",
     "multiline": "^1.0.2",
+    "nodemon": "^1.9.2",
     "supertest": "^1.1.0"
   },
   "license": "MIT"

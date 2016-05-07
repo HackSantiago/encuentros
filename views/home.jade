@@ -1,9 +1,10 @@
-extends layout
+extends layout-home
 
 block content
 
-  h1 Welcome to the Volatile AxiomChat
-
-  img(src="/img/thebear.png" width="34px")
-  if user
-    a.btn.btn-large.btn-success(href="/chat") Go to Chat
+  form.form-horizontal(method='POST')
+    h2 Busca encuentros locales
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      .col-md-8.col-md-offset-2
+        input.form-control(type='text', name='query', id='query', placeholder='ej: libertad de expresion, aborto, pena de muerte, ...', autofocus=true)

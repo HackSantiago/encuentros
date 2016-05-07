@@ -10,6 +10,7 @@ html
   body
     include partials/header
 
+    div(id="welcome-map")
     .container
       include partials/flash
       block content
@@ -17,5 +18,3 @@ html
     include partials/footer
 
     != js('application')
-
-    block extra-scripts
