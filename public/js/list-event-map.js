@@ -6,18 +6,26 @@ $(document).ready(function() {
     return ;
   }
 
-  $("#search-box").on('keypress', function (e) {
-    if (e.which == 13) {
-      $(this).parent("form").submit();
-      return false;    //<---- Add this line
-    }
-  });
-
   var santiagoLocation = {lat: -33.435960, lng: -70.646306},
     map = new google.maps.Map($map, {
       center: santiagoLocation,
       zoom: 12
     });
+
+  $("#search-box").on('keypress', function (e) {
+    if (e.which == 13) {
+      $("#search-form").submit();
+      return false;
+    }
+  });
+
+  $('.js-scroll-to-location').on('click', function (e) {
+    var $this = $(this),
+      coords = $this.data('coords');
+
+    map.setCenter(coords);
+    map.setZoom(16);
+  });
 
   if (window.searchResults && window.searchResults.length > 0) {
     for(var i = 0; i < window.searchResults.length; i++) {

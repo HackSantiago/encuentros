@@ -2,16 +2,24 @@ extends ../layout
 
 block content
 
+  .row
+    .col-sm-12
+      a.btn.btn-primary(href="/event/new") Crear novo evento
+
+  .row
     .col-sm-4
+        form#search-form(method="GET")
+            .form-group
+                input#search-box.form-control(type="text" name="text" placeholder='ej: libertad de expresion, aborto, pena de muerte, ...' value="#{query || '' }")
+            .form-group
+                input.btn(type="submit")
         for event in events
-            p
-                a(href="/event/#{event.id}") #{event.title}
+            .event-location
+                span.js-scroll-to-location(data-coords="#{JSON.stringify(event.location)}") #{event.title}
+                a.btn.btn-default.btn-sm(href="/event/#{event.id}") Detalles
 
         .addthis_native_toolbox
     .col-sm-8
-        form(method="GET")
-            input#search-box(type="text" name="text" placeholder='ej: libertad de expresion, aborto, pena de muerte, ...' value="#{query || '' }")
-            input(type="submit")
         div#list-event-map
 
 block extra-scripts
