@@ -1,10 +1,24 @@
 extends ../layout
 
 block content
-    h1 Eventos
 
-    a(href="/event/new") Crear nuevo evento
+    .col-sm-4
+        for event in events
+            p
+                a(href="/event/#{event.id}") #{event.title}
 
-    for event in events
-        p
-            a(href="/event/#{event.id}") #{event.title}
+        .addthis_native_toolbox
+    .col-sm-8
+        form(method="GET")
+            input#search-box(type="text" name="text" placeholder='ej: libertad de expresion, aborto, pena de muerte, ...' value="#{query || '' }")
+            input(type="submit")
+        div#list-event-map
+
+block extra-scripts
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDz3hvbb5cIUmdhqG7rOmwVbW3djMGc2S8&libraries=places')
+    != js('list-event-map')
+
+    script.
+        var searchResults = !{JSON.stringify(events)};
+
+
