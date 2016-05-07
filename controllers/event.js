@@ -9,6 +9,7 @@ exports.index = function(req, res) {
 
   Event.findByText(params.text)
   .then(function(events) {
+
     res.render('event/index', {events: events});
   });
 };
