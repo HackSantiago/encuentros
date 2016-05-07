@@ -59,16 +59,21 @@ exports.create = function(req, res) {
     location: [req.body.longitude, req.body.latitude]
   });
 
-  // validate not same creator
   event.save(function (err, savedEvent) {
     if (err) return next(err);
-
-    res.redirect('/event');
+    res.redirect('/event/' + savedEvent._id);
   });
 };
 
 exports.getCreate = function (req, res) {
-  res.render('event/new');
+  Event.findOne(createUserFilter(req.user), function(err, foundEvent) {
+    console.log(foundEvent)
+    if (foundEvent) {
+      req.flash('errors', {msg: 'Ya eres parte de un evento'})
+      return res.redirect('/event/my-event');
+    }
+    res.render('event/new');
+  });
 };
 
 exports.attend = function (req, res) {
@@ -100,9 +105,7 @@ exports.getUpdate = function(req, res) {
 };
 
 exports.myEvent = function(req, res) {
-  var user = req.user;
-  var filter = {$or:[{moderator: user}, {participants: {$in: [user]}}]}
-  Event.findOne(filter).populate('moderator').exec(function(err, event) {
+  Event.findOne(createUserFilter(req.user)).populate('moderator').exec(function(err, event) {
     if (err || !event) return next(err);
     console.log(event)
     res.render('event/my-event', {
@@ -110,3 +113,7 @@ exports.myEvent = function(req, res) {
     });
   })
 };
+
+function createUserFilter(user) {
+  return {$or:[{moderator: user}, {participants: {$in: [user]}}]}
+}
