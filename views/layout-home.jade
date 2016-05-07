@@ -10,11 +10,13 @@ html
   body
     include partials/header
 
-    div(id="welcome-map")
+    .map
+      #welcome-map
     .container
       include partials/flash
       block content
 
     include partials/footer
 
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDz3hvbb5cIUmdhqG7rOmwVbW3djMGc2S8')
     != js('application')

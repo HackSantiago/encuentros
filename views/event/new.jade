@@ -14,18 +14,21 @@ block content
             .col-sm-7
                 textarea.form-control(name='description', id='description', placeholder='Descripción')
         .form-group
-            label.col-sm-3.control-label(for='latitude') Latitude
+            label.col-sm-3.control-label Location
             .col-sm-7
-                input.form-control(type='text', name='latitude', id='latitude', placeholder='Latitude')
-
+              input.form-control(type='text', name='address', id='address', placeholder='Address')
+              input(type='hidden', name='latitude' id='latitude')
+              input(type='hidden', name='longitude' id='longitude')
         .form-group
-            label.col-sm-3.control-label(for='longitude') Longitude
-            .col-sm-7
-                input.form-control(type='text', name='longitude', id='longitude', placeholder='Longitude')
-
+            .col-sm-offset-3.col-sm-7
+                #map
 
         .form-group
             .col-sm-offset-3.col-sm-7
                 button.btn.btn-success(type='submit')
                     i.fa.fa-user-plus
                     | Crear evento
+
+block extra-scripts
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDz3hvbb5cIUmdhqG7rOmwVbW3djMGc2S8&libraries=places')
+  != js('new-event')
