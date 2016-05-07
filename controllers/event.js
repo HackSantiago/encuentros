@@ -41,8 +41,8 @@ exports.getEventsNearToLocation = function(req, res) {
 
 exports.show = function(req, res) {
   var eventId = req.params.eventId;
-  var findEvent = findEvent({_id: eventId}).exec();
-  Promise.all([isPartOfEvent(req.user), findEvent]).then(function(results) {
+  var findEventPromise = findEvent({_id: eventId}).exec();
+  Promise.all([isPartOfEvent(req.user), findEventPromise]).then(function(results) {
     var event = results[1];
     res.render('event/show', {
       event: event,
