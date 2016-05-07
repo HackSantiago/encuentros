@@ -1,3 +1,4 @@
+var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
 /*
@@ -21,4 +22,5 @@ var eventSchema = new mongoose.Schema({
   }
 );
 
-module.exports = mongoose.model('Event', eventSchema);
+var Model = mongoose.model('Event', eventSchema);
+module.exports = Event = Promise.promisifyAll(Model);

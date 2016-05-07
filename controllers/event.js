@@ -2,11 +2,10 @@ var Event = require('../models/Event');
 var User = require('../models/User');
 
 exports.index = function(req, res) {
-  Event.find({}, function(err, events) {
-    res.render('event/index', {
-      title: 'Events',
-      events: events
-    });
+  Event.findAsync({})
+  .then(function(events) {
+
+    res.render('event/index', {events: events});
   });
 };
 
