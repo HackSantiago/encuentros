@@ -1,10 +1,15 @@
+var R = require('ramda');
+
 var Event = require('../models/Event');
 var User = require('../models/User');
 
-exports.index = function(req, res) {
-  Event.findAsync({})
-  .then(function(events) {
 
+exports.index = function(req, res) {
+  var params = R.pick(['text'], req.query);
+
+  Event.findByText(params.text)
+  .then(function(events) {
+    console.log('EVENTS FOUND!', events);
     res.render('event/index', {events: events});
   });
 };
@@ -25,10 +30,8 @@ exports.show = function(req, res) {
 };
 
 exports.addParticipants = function (req, res) {
-
-  var eventId = req.params.eventId;
-
-  console.log('asdad', req.body.participant);
+  var eventId = req.params.eventId,
+      participant = req.body.participant;
 
   Event.findOne({_id: eventId}, function (err, event) {
 
@@ -52,7 +55,8 @@ exports.create = function(req, res) {
     title: req.body.title,
     description: req.body.description,
     url: req.body.url,
-    location: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)]
+    address: req.body.address,
+    location: [req.body.longitude, req.body.latitude]
   });
 
   // validate not same creator

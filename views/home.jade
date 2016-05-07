@@ -2,9 +2,8 @@ extends layout-home
 
 block content
 
-  form.form-horizontal(method='POST')
+  form.form-horizontal(method='GET', action='/event')
     h2 Busca encuentros locales
-    input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       .col-md-8.col-md-offset-2
-        input.form-control(type='text', name='query', id='query', placeholder='ej: libertad de expresion, aborto, pena de muerte, ...', autofocus=true)
+        input.form-control(type='text', name='text', id='text', placeholder='ej: libertad de expresion, aborto, pena de muerte, ...', autofocus=true)
