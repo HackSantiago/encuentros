@@ -16,8 +16,10 @@
 //= require lib/jquery-2.1.3.min
 //= require lib/bootstrap.min
 //= require lib/components/ramda/dist/ramda.min
+//= require lib/components/moment/moment
 //= require lib/components/lodash/dist/lodash.min
 //= require lib/components/moment/min/moment.min
 //= require lib/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min
+//= require lib/recorder
 //= require home
 //= require show-event-map
