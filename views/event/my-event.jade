@@ -23,6 +23,19 @@ block content
         button.btn.btn-primary.js-record-stop.hidden Detener grabación
         ul.download.list-group
 
+
+        #disqus_thread
+        script.
+          (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//encuentroslocales.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
         .addthis_native_toolbox
     .col-sm-8
         div#show-event-map(data-coords="#{JSON.stringify(event.location)}" data-address='#{event.address}' data-title='#{event.title}')
