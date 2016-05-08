@@ -25,7 +25,7 @@ exports.index = function(req, res) {
         date: moment(event.date).format(format)
       }
     });
-    
+
     res.render('event/index', {
       events: events,
       query: params.text

@@ -3,7 +3,10 @@ extends layout-home
 block content
 
   form.form-horizontal(method='GET', action='/event')
-    h2 Busca encuentros locales
+    .form-group
+      .col-md-8.col-md-offset-2
+        h2 Una voz para la constitucion
+        h3 Busca encuentros locales y participa
     .form-group
       .col-md-8.col-md-offset-2
         input.form-control(type='text', name='text', id='text', placeholder='ej: libertad de expresion, aborto, pena de muerte, ...', autofocus=true)

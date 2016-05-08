@@ -4,6 +4,10 @@ $(document).ready(function() {
   if (!$map) {
     return ;
   }
+  var $m = $('#welcome-map');
+  $m.on('click', function() {
+    $m.css('opacity', 1);
+  });
 
   var santiagoLocation = {lat: -33.435960, lng: -70.646306},
       map = new google.maps.Map($map, {
