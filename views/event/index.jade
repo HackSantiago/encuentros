@@ -20,7 +20,9 @@ block content
           for event in events
               .row.event-location
                 .col-sm-9
-                  span.js-scroll-to-location(data-coords="#{JSON.stringify(event.location)}") #{event.title}
+                  p.js-scroll-to-location(data-coords="#{JSON.stringify(event.location)}") #{event.title}
+                  small Fecha: #{event.date}
+
                 .col-sm-3
                   a.btn.btn-info.btn-sm(href="/event/#{event.id}") Detalles >
 

@@ -9,6 +9,7 @@ var eventSchema = new mongoose.Schema({
   desc:         String,
   url:          String,
   address:      String,
+  date:         Date,
   tags:         { type: [String] , default: '' },
   moderator:    { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   participants: [ { type: mongoose.Schema.Types.ObjectId, ref: 'User' } ],

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "ramda": "^0.21.0",
-    "lodash": "^4.11.2"
+    "lodash": "^4.11.2",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
   }
 }

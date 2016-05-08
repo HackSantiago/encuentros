@@ -10,13 +10,17 @@ block content
             .col-sm-7
                 input.form-control(type='text', name='title', id='title', placeholder='Título', autofocus, required)
         .form-group
+          label.col-sm-3.control-label(for='date') Fecha
+          .col-sm-7
+            input.form-control#date(type=text name='date', placeholder='Ingrese fecha')
+        .form-group
             label.col-sm-3.control-label(for='desc') Descripción
             .col-sm-7
                 textarea.form-control(name='desc', id='desc', placeholder='Descripción')
         .form-group
-            label.col-sm-3.control-label Location
+            label.col-sm-3.control-label Dirección
             .col-sm-7
-              input.form-control(type='text', name='address', id='address', placeholder='Address', required)
+              input.form-control(type='text', name='address', id='address', placeholder='Dirección', required)
               input(type='hidden', name='latitude' id='latitude')
               input(type='hidden', name='longitude' id='longitude')
         .form-group

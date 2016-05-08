@@ -11,7 +11,7 @@ block content
             input(type='hidden', id='eventId', name='eventId' value='#{event._id}')
             button.btn.btn-success(type='submit') Unirse a este encuentro
     h1 #{event.title}
-
+    p Fecha: #{event.dateFormatted}
     p #{event.desc}
 
     p Dirección: #{event.address}

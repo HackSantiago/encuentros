@@ -11,9 +11,13 @@ block content
       .col-sm-7
         input.form-control(type='text', name='title', id='title', placeholder='Título', value="#{event.title}" autofocus)
     .form-group
+      label.col-sm-3.control-label(for='date') Fecha
+      .col-sm-7
+        input.form-control#date(type=text name='date', placeholder='Ingrese fecha' value='#{event.dateFormatted}')
+    .form-group
       label.col-sm-3.control-label(for='description') Descripción
       .col-sm-7
-        textarea.form-control(name='description', id='description', placeholder='Descripción', value="#{event.desc}")
+        textarea.form-control(name='desc', id='desc', placeholder='Descripción', value="#{event.desc}")
 
     .form-group
       label.col-sm-3.control-label Location

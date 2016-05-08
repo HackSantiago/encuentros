@@ -79,7 +79,15 @@ $(document).ready(function() {
     }
   });
 
-
+  $('#date').datetimepicker({
+    format: 'DD-MM-YYYY hh:mm a',
+    icons: {
+      time: "fa fa-clock-o",
+      date: "fa fa-calendar",
+      up: "fa fa-arrow-up",
+      down: "fa fa-arrow-down"
+    }
+  });
 
 
 });

@@ -3,6 +3,8 @@ var R = require('ramda');
 var Event = require('../models/Event');
 var User = require('../models/User');
 var Promise = require('bluebird');
+var moment = require('moment');
+var format = 'DD-MM-YYYY hh:mm a'
 
 
 exports.index = function(req, res) {
@@ -19,7 +21,8 @@ exports.index = function(req, res) {
           lng: event.location[0],
           lat: event.location[1]
         },
-        title: event.title
+        title: event.title,
+        date: moment(event.date).format(format)
       }
     });
     
@@ -44,6 +47,7 @@ exports.show = function(req, res) {
   var findEventPromise = findEvent({_id: eventId}).exec();
   Promise.all([isPartOfEvent(req.user), findEventPromise]).then(function(results) {
     var event = results[1];
+    event.dateFormatted = moment(event.date).format(format)
     res.render('event/show', {
       event: event,
       isPartOfEvent: results[0],
@@ -78,6 +82,7 @@ exports.create = function(req, res) {
     desc: req.body.desc,
     url: req.body.url,
     address: req.body.address,
+    date: moment(req.body.date, 'DD-MM-YYYY hh:mm a'),
     location: [req.body.longitude, req.body.latitude]
   });
 
@@ -89,10 +94,10 @@ exports.create = function(req, res) {
 
 exports.getCreate = function (req, res) {
   isPartOfEvent(req.user).then(function(result) {
-    if (result) {
-      req.flash('errors', {msg: 'Ya eres parte de un encuentro'});
-      return res.redirect('/event/my-event');
-    }
+    // if (result) {
+    //   req.flash('errors', {msg: 'Ya eres parte de un encuentro'});
+    //   return res.redirect('/event/my-event');
+    // }
     res.render('event/new');
   })
 };
@@ -129,7 +134,7 @@ exports.update = function (req, res) {
     event.url = req.body.url;
     event.address = req.body.address;
     event.location = [req.body.longitude, req.body.latitude];
-
+    event.date = moment(req.body.date, format);
     event.save(function (err, event) {
       req.flash('success', { msg: 'Encuentro actualizado.' });
       res.redirect('/event/' + event.id);
@@ -141,7 +146,7 @@ exports.getUpdate = function(req, res) {
   var eventId = req.params.eventId;
   Event.findOne({ _id: eventId}, function(err, event) {
     if (err || !event) return next(err);
-
+    event.dateFormatted = moment(event.date).format(format)
     res.render('event/update', {
       event: event
     });
@@ -155,6 +160,7 @@ exports.myEvent = function(req, res) {
       req.flash('warning', 'Aun no eres parte de un encuentro, únete o crea uno');
       return res.redirect('/event');
     }
+    event.dateFormatted = moment(event.date).format(format)
     res.render('event/my-event', {
       event: event
     });
