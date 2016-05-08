@@ -4,6 +4,7 @@
   "dependencies": {
     "ramda": "^0.21.0",
     "lodash": "^4.11.2",
-    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37",
+    "recorderjs": "~0.0.0"
   }
 }
