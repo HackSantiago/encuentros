@@ -199,10 +199,10 @@ app.get('/event/:eventId/edit', passportConf.isAuthenticated, eventController.ge
 app.get('/event/my-event', passportConf.isAuthenticated, eventController.myEvent);
 app.get('/event/:eventId', eventController.show);
 
-app.post('/event/join', passportConf.isAuthenticated, eventController.join);
-app.post('/event/new', passportConf.isAuthenticated, eventController.create);
-app.post('/event/:eventId/edit', passportConf.isAuthenticated, eventController.update);
-app.post('/event/add-participants', passportConf.isAuthenticated, eventController.addParticipants)
+app.post('/event/join', passportConf.isAuthenticated, userMiddleware.isUserWithRUT, eventController.join);
+app.post('/event/new', passportConf.isAuthenticated, userMiddleware.isUserWithRUT, eventController.create);
+app.post('/event/:eventId/edit', passportConf.isAuthenticated, userMiddleware.isUserWithRUT, eventController.update);
+app.put('/event/add-participants', passportConf.isAuthenticated, eventController.addParticipants)
 
 
 /**
