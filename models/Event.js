@@ -24,6 +24,13 @@ eventSchema.plugin(searchPlugin, {
   fields: ['title', 'desc', 'tags', 'address']
 });
 
+eventSchema.methods.toLocation = function () {
+  return {
+    lng: this.location[0],
+    lat: this.location[1]
+  };
+}
+
 
 eventSchema.statics.findByText = function(text) {
   if (!text) {

@@ -1,21 +1,36 @@
 extends ../layout
 
 block content
-    .page-header
-        h3 Actualizar evento
-    form.form-horizontal(id='create-event-form', method='POST')
-        input(type='hidden', name='_csrf', value=_csrf)
-        input(type='hidden', name='eventId', value=#{eventId})
-        .form-group
-            label.col-sm-3.control-label(for='title') Título
-            .col-sm-7
-                input.form-control(type='text', name='title', id='title', placeholder='Título', autofocus)
-        .form-group
-            label.col-sm-3.control-label(for='description') Descripción
-            .col-sm-7
-                textarea.form-control(name='description', id='description', placeholder='Descripción')
-        .form-group
-            .col-sm-offset-3.col-sm-7
-                button.btn.btn-success(type='submit')
-                    i.fa.fa-user-plus
-                    | Crear evento
+  .page-header
+    h3 Actualizar evento
+
+  form.form-horizontal(id='create-event-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='title') Título
+      .col-sm-7
+        input.form-control(type='text', name='title', id='title', placeholder='Título', value="#{event.title}" autofocus)
+    .form-group
+      label.col-sm-3.control-label(for='description') Descripción
+      .col-sm-7
+        textarea.form-control(name='description', id='description', placeholder='Descripción', value="#{event.desc}")
+
+    .form-group
+      label.col-sm-3.control-label Location
+      .col-sm-7
+        input.form-control(type='text', name='address', id='address', placeholder='Address', required, value="#{event.address}")
+        input(type='hidden', name='latitude' id='latitude' value="#{event.toLocation().lat}")
+        input(type='hidden', name='longitude' id='longitude' value="#{event.toLocation().lng}")
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        #map
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Actualizar evento
+
+block extra-scripts
+  script.
+    var coords = !{JSON.stringify(event.toLocation())}
+  != js('update-event')
