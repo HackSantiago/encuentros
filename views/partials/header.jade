@@ -12,7 +12,7 @@
     .collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a(href='/event') Ver eventos
+          a(href='/event') Ver encuentros locales
         if !user
           li(class=title=='Login'?'active':undefined)
             a(href='/login') Login
@@ -34,7 +34,9 @@
               li
                 a(href='/account') Cuenta
               li
-                a(href='/event') Eventos
+                a(href='/event') Encuentros
+              li
+                a(href='/event/my-event') Mi encuentro
               li.divider
               li
                 a(href='/logout') Logout

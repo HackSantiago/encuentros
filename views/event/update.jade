@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .page-header
-    h3 Actualizar evento
+    h3 Actualizar encuentro
 
   form.form-horizontal(id='create-event-form', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
@@ -28,7 +28,7 @@ block content
       .col-sm-offset-3.col-sm-7
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus
-          | Actualizar evento
+          | Actualizar encuentro
 
 block extra-scripts
   script.

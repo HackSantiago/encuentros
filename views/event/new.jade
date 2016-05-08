@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     .page-header
-        h3 Crear evento
+        h3 Crear encuentro Local
     form.form-horizontal(id='create-event-form', method='POST')
         input(type='hidden', name='_csrf', value=_csrf)
         .form-group
@@ -27,7 +27,7 @@ block content
             .col-sm-offset-3.col-sm-7
                 button.btn.btn-success(type='submit')
                     i.fa.fa-user-plus
-                    | Crear evento
+                    | Crear
 
 block extra-scripts
   != js('new-event')

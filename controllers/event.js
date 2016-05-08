@@ -53,7 +53,7 @@ exports.show = function(req, res) {
 };
 
 exports.addParticipants = function (req, res) {
-  var eventId = req.params.eventId,
+  var eventId = req.params.eventId,my
       participant = req.body.participant;
 
   Event.findOne({_id: eventId}, function (err, event) {
@@ -90,7 +90,7 @@ exports.create = function(req, res) {
 exports.getCreate = function (req, res) {
   isPartOfEvent(req.user).then(function(result) {
     if (result) {
-      req.flash('errors', {msg: 'Ya eres parte de un evento'});
+      req.flash('errors', {msg: 'Ya eres parte de un encuentro'});
       return res.redirect('/event/my-event');
     }
     res.render('event/new');
@@ -100,7 +100,7 @@ exports.getCreate = function (req, res) {
 exports.join = function (req, res) {
   isPartOfEvent(req.user).then(function(result) {
     if (result) {
-      req.flash('errors', {msg: 'Ya eres parte de un evento'});
+      req.flash('errors', {msg: 'Ya eres parte de un encuentro'});
       return res.redirect('/event/my-event');
     }
     var eventId = req.body.eventId
@@ -111,7 +111,7 @@ exports.join = function (req, res) {
       }
       event.participants.push(req.user);
       event.save(function (err, event) {
-        req.flash('success', { msg: 'Te has unido a este evento.' });
+        req.flash('success', { msg: 'Te has unido a este encuentro.' });
         res.redirect('/event/' + eventId);
       });
     });
@@ -131,7 +131,7 @@ exports.update = function (req, res) {
     event.location = [req.body.longitude, req.body.latitude];
 
     event.save(function (err, event) {
-      req.flash('success', { msg: 'Evento actualizado.' });
+      req.flash('success', { msg: 'Encuentro actualizado.' });
       res.redirect('/event/' + event.id);
     });
   });
@@ -151,7 +151,10 @@ exports.getUpdate = function(req, res) {
 exports.myEvent = function(req, res) {
   findEvent(createUserFilter(req.user)).exec(function(err, event) {
     if (err) return next(err);
-    if (!event) return res.redirect('/event');
+    if (!event) {
+      req.flash('warning', 'Aun no eres parte de un encuentro, únete o crea uno');
+      return res.redirect('/event');
+    }
     res.render('event/my-event', {
       event: event
     });

@@ -9,7 +9,7 @@ block content
           form.form-horizontal(id='create-event-form', method='POST' action='/event/join')
             input(type='hidden', name='_csrf', value=_csrf)
             input(type='hidden', id='eventId', name='eventId' value='#{event._id}')
-            button.btn.btn-success(type='submit') Unirse a este evento
+            button.btn.btn-success(type='submit') Unirse a este encuentro
     h1 #{event.title}
 
     p #{event.desc}
