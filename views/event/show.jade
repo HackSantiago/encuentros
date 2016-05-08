@@ -27,10 +27,21 @@ block content
               +renderUser(participant)
     .js-event-coords
 
+    #disqus_thread
+    script.
+      (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
 
+      s.src = '//encuentroslocales.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
     .addthis_native_toolbox
   .col-sm-8
     div#show-event-map(data-coords="#{JSON.stringify(event.location)}" data-address='#{event.address}' data-title='#{event.title}')
 block extra-scripts
   <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-572e42ebc8e2a29e"></script>
+  <script id="dsq-count-scr" src="//encuentroslocales.disqus.com/count.js" async></script>
