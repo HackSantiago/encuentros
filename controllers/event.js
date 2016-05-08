@@ -123,9 +123,16 @@ exports.update = function (req, res) {
 
   Event.findOne({ _id: eventId}, function(err, event) {
     if (err) return next(err);
+
+    event.title = req.body.title;
+    event.desc = req.body.desc;
+    event.url = req.body.url;
+    event.address = req.body.address;
+    event.location = [req.body.longitude, req.body.latitude];
+
     event.save(function (err, event) {
       req.flash('success', { msg: 'Evento actualizado.' });
-      res.redirect('/account');
+      res.redirect('/event/' + event.id);
     });
   });
 };
