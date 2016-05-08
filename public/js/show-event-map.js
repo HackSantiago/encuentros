@@ -28,4 +28,15 @@ $(document).ready(function() {
     openInfo();
   }
 
+
+  function hasGetUserMedia() {
+    return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia || navigator.msGetUserMedia);
+  }
+
+  if (hasGetUserMedia()) {
+    // Good to go!
+  } else {
+    console.log('getUserMedia() is not supported in your browser');
+  }
 });

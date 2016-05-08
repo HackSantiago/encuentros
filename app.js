@@ -11,6 +11,9 @@ var logger = require('morgan');
 var errorHandler = require('errorhandler');
 var lusca = require('lusca');
 var methodOverride = require('method-override');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 var _ = require('lodash');
 var MongoStore = require('connect-mongo')(session);
@@ -56,6 +59,7 @@ mongoose.connection.on('error', function() {
  * Express configuration.
  */
 app.set('port', process.env.PORT || 3000);
+app.set('portHttps', process.env.PORT_HTTPS || 3001);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(compress());
@@ -210,10 +214,27 @@ app.put('/event/add-participants', passportConf.isAuthenticated, eventController
  */
 app.use(errorHandler());
 
+var options = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.crt'),
+  requestCert: false,
+  rejectUnauthorized: false
+};
+
 /**
  * Start Express server.
  */
-app.listen(app.get('port'), function() {
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(options, app);
+
+httpServer.listen(app.get('port'), function() {
   console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
 });
+httpsServer.listen(app.get('portHttps'), function(){
+  console.log('Express server listening on port %d in %s mode', app.get('portHttps'), app.get('env'));
+});
+// app.listen(app.get('port'), function() {
+//   console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
+// });
 module.exports = app;
