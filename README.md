@@ -1,6 +1,7 @@
 # Ecuentros Locales
 
 http://www.hackathon.io/encuentros-locales
+http://www.gob.cl/docs/guia_paso_a_paso_encuentros_locales.pdf
 
 > Gather with people and discuss a relevant topics broadcasting a radio channel.
 
